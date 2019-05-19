@@ -1,0 +1,49 @@
+version: '3'
+services:
+  iot-app:
+    image: adrianolaselva/analyst-challenge:0.0.1
+    environment:
+      - AWS_ACCESS_KEY=
+      - AWS_SECRET_KEY=
+      - AWS_SQS_QUEUE_URL_EVENT_RECEIVER=https://sqs.us-east-1.amazonaws.com/.../queue-event-receiver
+      - ELASTICSEARCH_URL=http://elasticsearch:9200/
+      - ELASTICSEARCH_INDEX=iot-receive
+    ports:
+      - "5000:80"
+    networks:
+      - stack
+    links:
+      - elasticsearch
+    depends_on:
+      - elasticsearch
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
+    volumes:
+      - elasticsearchdata:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=127.0.0.1
+      - ELASTICSEARCH_USERNAME=iot
+      - ELASTICSEARCH_PASSWORD=password
+    networks:
+      - stack
+  kibana-iot-app:
+    image: docker.elastic.co/kibana/kibana:7.0.0
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_USERNAME=iot
+      - ELASTICSEARCH_PASSWORD=password
+    networks:
+      - stack
+    depends_on:
+      - elasticsearch
+
+volumes:
+  elasticsearchdata:
+    driver: local
+
+networks: {stack: {}}

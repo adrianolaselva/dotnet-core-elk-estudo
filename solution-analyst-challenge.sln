@@ -1,0 +1,14 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "solution-analyst-challenge", "solution-analyst-challenge\solution-analyst-challenge.shproj", "{AAC7CD3C-3F80-43E7-9AB1-C43D12E0E8A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "analyst-challenge", "analyst-challenge\analyst-challenge.csproj", "{456CE28C-2731-4B3D-B57C-2ED1F2A8478D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "analyst-challenge-test", "analyst-challenge-test\analyst-challenge-test.csproj", "{DF9444AA-4E79-4DD5-9050-878DFA5B76CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+	EndGlobalSection
+EndGlobal
