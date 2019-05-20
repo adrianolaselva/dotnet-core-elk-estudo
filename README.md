@@ -4,6 +4,8 @@
 
 ## Exemplo de requisição
 
+[Documentação swagger](https://localhost:5001/swagger/index.html)
+
 #### Requisição responsável por enviar os eventos
 
 ```sh
