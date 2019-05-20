@@ -1,5 +1,3 @@
-using System;
-
 namespace analyst_challenge.Models
 {
     public class ErrorViewModel

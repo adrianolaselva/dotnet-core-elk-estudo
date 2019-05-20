@@ -1,32 +1,26 @@
-using System;
-using analyst_challenge.Controllers;
-using analyst_challenge.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Net;
+using System.Threading.Tasks;
+using analyst_challenge;
+using analyst_challenge_test.Helpers;
+using FluentAssertions;
+using Xunit;
 
 namespace analyst_challenge_test.Controllers
 {
-    [TestClass]
-    public class EventReceiverControllerTest
+    public class EventReceiverControllerTests : IClassFixture<Request<Startup>>
     {
-//        private readonly EventReceiverController _eventReceiverController;
-//
-//        public EventReceiverControllerTest(EventReceiverController eventReceiverController)
-//        {
-//            _eventReceiverController = eventReceiverController;
-//        }
-    
-        [TestMethod]
-        public void TestCreateEvent()
+        public EventReceiverControllerTests(Request<Startup> _request)
         {
-            Assert.AreEqual(1, 1);
-//            var result = _eventReceiverController.Create(new EventReceiver
-//            {
-//                Timestamp = DateTime.Now,
-//                Valor = "teste",
-//                Tag = "brasil.sudeste.sensor01"
-//            });
-//            
-//            Assert.Pass();
+            this._request = _request;
+        }
+
+        private readonly Request<Startup> _request;
+
+        [Fact]
+        public async Task GetEventReceivers404NotFoundById()
+        {
+            var response = await _request.Get("/v1/event-receivers/1");
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using analyst_challenge.Models;
 using Nest;
 

@@ -13,7 +13,7 @@ namespace analyst_challenge
         {
             var url = configuration["ELASTICSEARCH_URL"];
             var defaultIndex = configuration["ELASTICSEARCH_INDEX"];
-            
+
             var settings = new ConnectionSettings(new Uri(url))
                 .DefaultIndex($"{defaultIndex}-{DateTime.Now:yyyyMMdd}")
                 .DefaultMappingFor<EventReceiver>(m => m

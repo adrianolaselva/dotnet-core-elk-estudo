@@ -15,16 +15,16 @@ namespace analyst_challenge.Workers
 {
     public class EventReceiverPersistWorker : IHostedService, IDisposable
     {
-        private readonly ILogger<EventReceiverPersistWorker> _logger;
-        private readonly IAmazonSQS _sqs;
-        private readonly ReceiveMessageRequest _receiveMessageRequest;
         private readonly IConfiguration _configuration;
+        private readonly ILogger<EventReceiverPersistWorker> _logger;
+        private readonly ReceiveMessageRequest _receiveMessageRequest;
         private readonly IEventReceiverDAO _receiverDao;
+        private readonly IAmazonSQS _sqs;
 
         public EventReceiverPersistWorker(
-            ILogger<EventReceiverPersistWorker> logger, 
-            IAmazonSQS sqs, 
-            IConfiguration configuration, 
+            ILogger<EventReceiverPersistWorker> logger,
+            IAmazonSQS sqs,
+            IConfiguration configuration,
             IEventReceiverDAO receiverDao)
         {
             _logger = logger;
@@ -32,10 +32,16 @@ namespace analyst_challenge.Workers
             _configuration = configuration;
             _receiverDao = receiverDao;
 
-            _receiveMessageRequest = new ReceiveMessageRequest{
+            _receiveMessageRequest = new ReceiveMessageRequest
+            {
                 QueueUrl = configuration["AWS_SQS_QUEUE_URL_EVENT_RECEIVER"],
                 WaitTimeSeconds = 20
             };
+        }
+
+        public void Dispose()
+        {
+            _sqs.Dispose();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -45,9 +51,10 @@ namespace analyst_challenge.Workers
             do
             {
                 var receiveMessageResponse = _sqs.ReceiveMessageAsync(_receiveMessageRequest).Result;
-                
-                _logger.Log(LogLevel.Information, $"Foram encontradas {receiveMessageResponse.Messages.Count} mensagens para serem processadas");
-                
+
+                _logger.Log(LogLevel.Information,
+                    $"Foram encontradas {receiveMessageResponse.Messages.Count} mensagens para serem processadas");
+
                 foreach (var message in receiveMessageResponse.Messages)
                 {
                     _logger.Log(LogLevel.Information, $"Mensagem recebida para processamento [{message.MessageId}]");
@@ -55,11 +62,11 @@ namespace analyst_challenge.Workers
                     _logger.Log(LogLevel.Information, $"Conteúdo [{message.Body}]");
 
                     var eventReceiver = JsonConvert.DeserializeObject<EventReceiver>(message.Body);
-                    
+
                     _logger.Log(LogLevel.Information, eventReceiver.ToString());
-                    
+
                     _receiverDao.Create(JsonConvert.DeserializeObject<EventReceiver>(message.Body));
-                    
+
                     var messageReceiptHandle = receiveMessageResponse.Messages.FirstOrDefault()?.ReceiptHandle;
 
                     _sqs.DeleteMessageAsync(new DeleteMessageRequest
@@ -68,24 +75,18 @@ namespace analyst_challenge.Workers
                         ReceiptHandle = message.ReceiptHandle
                     }, cancellationToken);
                 }
-                
+
                 Task.Delay(5, cancellationToken);
             } while (!cancellationToken.IsCancellationRequested);
 
             return Task.CompletedTask;
-
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
             _logger.Log(LogLevel.Information, "Fim processamento");
-            
-            return Task.CompletedTask;
-        }
 
-        public void Dispose()
-        {
-            _sqs.Dispose();
+            return Task.CompletedTask;
         }
     }
 }

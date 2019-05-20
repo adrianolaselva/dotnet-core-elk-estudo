@@ -9,13 +9,17 @@ namespace analyst_challenge.Models
     public class EventReceiver
     {
         public Guid Id { get; set; }
-        [JsonConverter(typeof (UnixDateTimeConverter))]
+
+        [JsonConverter(typeof(UnixDateTimeConverter))]
         [Required(ErrorMessage = "Timestamp é obrigatório")]
         public DateTime Timestamp { get; set; }
+
         [Required(ErrorMessage = "Tag é obrigatório")]
         public string Tag { get; set; }
+
         [Required(ErrorMessage = "Valor é obrigatório")]
         public string Valor { get; set; }
+
         public EventStatus Status { get; set; }
     }
 }
