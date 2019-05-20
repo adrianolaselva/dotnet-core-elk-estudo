@@ -15,10 +15,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace analyst_challenge
@@ -52,6 +54,17 @@ namespace analyst_challenge
             services.AddSingleton<IHostedService, EventReceiverPersistWorker>();
             
             services.AddElasticsearch(Configuration);
+
+            services.AddSwaggerGen(c => 
+            {
+                c.SwaggerDoc("v1",
+                    new Info
+                    {
+                        Title = "Analyst challenge IOT",
+                        Version = "v1"
+                    });
+
+            });
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -67,8 +80,11 @@ namespace analyst_challenge
             }
 
             app.UseHttpsRedirection();
-//            app.UseStaticFiles();
-//            app.UseCookiePolicy();
+            
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Analyst challenge IOT");
+            });
 
             app.UseMvc();
         }

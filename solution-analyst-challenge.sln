@@ -4,7 +4,9 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "solution-analyst-challenge"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "analyst-challenge", "analyst-challenge\analyst-challenge.csproj", "{456CE28C-2731-4B3D-B57C-2ED1F2A8478D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "analyst-challenge-test", "analyst-challenge-test\analyst-challenge-test.csproj", "{DF9444AA-4E79-4DD5-9050-878DFA5B76CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "analyst-challenge-test", "analyst-challenge-test\analyst-challenge-test.csproj", "{501D29B9-100B-48D5-BCFD-21F67FE4ACF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{17262659-B2B1-4CF4-B54B-4C2BB9FBE084}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
