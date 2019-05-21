@@ -14,10 +14,9 @@ namespace analyst_challenge_test.Helpers
         public Request()
         {
             var webHostBuilder = new WebHostBuilder().UseStartup<TStartup>()
-                .UseConfiguration(ConfigurationSingleton.GetConfiguration());
+                .UseConfiguration(ConfigurationFactory.GetConfiguration());
             _server = new TestServer(webHostBuilder);
             _client = _server.CreateClient();
-            _client.Timeout = new TimeSpan(10);
         }
 
         public void Dispose()

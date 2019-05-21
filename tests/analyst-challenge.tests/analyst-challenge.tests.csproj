@@ -17,10 +17,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="DAO" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Content Include="appsettings.dev.json">
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>

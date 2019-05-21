@@ -19,7 +19,7 @@ namespace analyst_challenge.Controllers
             _logger = logger;
             _eventReceiverService = eventReceiverService;
         }
-
+        
         [HttpPost]
         public IActionResult Create([FromBody] EventReceiver eventReceiver)
         {

@@ -4,7 +4,7 @@
 
 ## Exemplo de requisição
 
-[Documentação swagger](https://localhost:5001/swagger/index.html)
+[Documentação swagger](http://localhost:5000/swagger/index.html)
 
 #### Requisição responsável por enviar os eventos
 
@@ -30,7 +30,7 @@ sudo docker build . --tag=adrianolaselva/analyst-challenge:0.0.1
 ### Rodar projeto
 
 ```sh
-sudo docker run -it -p 5005:80 adrianolaselva/analyst-challenge:0.0.1 \
+sudo docker run -it -p 5005:80 adrianolaselva/analyst-challenge:0.0.2 \
 -e AWS_ACCESS_KEY= \
 -e AWS_SECRET_KEY= \
 -e AWS_SQS_QUEUE_URL_EVENT_RECEIVER=https://sqs.us-east-1.amazonaws.com/123123213121/queue-event-receiver \

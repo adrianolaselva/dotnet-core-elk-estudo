@@ -27,16 +27,10 @@ namespace analyst_challenge
 
         public void ConfigureServices(IServiceCollection services)
         {
-//            services.Configure<CookiePolicyOptions>(options =>
-//            {
-//                options.CheckConsentNeeded = context => true;
-//                options.MinimumSameSitePolicy = SameSiteMode.None;
-//            });
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<IEventReceiverService, EventReceiverServiceImpl>();
-//            services.AddScoped<IEventReceiverDAO, EventReceiverDAOImpl>();
             services.AddSingleton<IEventReceiverDAO, EventReceiverDAOImpl>();
+
             services.AddSingleton<IAmazonSQS>(new AmazonSQSClient(
                 Configuration["AWS_ACCESS_KEY"],
                 Configuration["AWS_SECRET_KEY"],
@@ -65,11 +59,8 @@ namespace analyst_challenge
                 app.UseHsts();
 
             app.UseHttpsRedirection();
-
             app.UseSwagger();
-
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Analyst challenge IOT"); });
-
             app.UseMvc();
         }
     }
