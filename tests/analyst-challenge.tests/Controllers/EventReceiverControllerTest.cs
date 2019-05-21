@@ -9,13 +9,13 @@ namespace analyst_challenge_test.Controllers
 {
     public class EventReceiverControllerTests : IClassFixture<Request<Startup>>
     {
+        private readonly Request<Startup> _request;
+
         public EventReceiverControllerTests(Request<Startup> _request)
         {
             this._request = _request;
         }
-
-        private readonly Request<Startup> _request;
-
+        
         [Fact]
         public async Task GetEventReceivers404NotFoundById()
         {
