@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using analyst_challenge.Models;
 using Nest;
 
@@ -19,11 +20,19 @@ namespace analyst_challenge.DAO.Impl
             return eventReceiver;
         }
 
-        public EventReceiver List(EventReceiver eventReceiver)
+        public EventReceiver FindById(string uuid)
         {
-            _elasticClient.Search<EventReceiver>();
+            var eventReceiver = _elasticClient.Get<EventReceiver>(uuid);
 
-            return eventReceiver;
+            return eventReceiver.Source;
+        }
+
+        public IReadOnlyCollection<EventReceiver> List(SearchDescriptor<EventReceiver> search)
+        {
+            
+            var response = _elasticClient.Search<EventReceiver>(s => search);
+            
+            return response.Documents;
         }
 
         public EventReceiver Create(EventReceiver eventReceiver)

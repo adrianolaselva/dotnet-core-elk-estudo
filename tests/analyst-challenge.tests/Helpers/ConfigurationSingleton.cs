@@ -1,3 +1,6 @@
+using System.IO;
+using Microsoft.Extensions.Configuration;
+
 namespace analyst_challenge_test.Helpers
 {
     public class ConfigurationSingleton

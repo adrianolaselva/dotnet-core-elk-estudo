@@ -1,7 +1,7 @@
 version: '3'
 services:
   iot-app:
-    image: adrianolaselva/analyst-challenge:0.0.1
+    build: ./src/analyst-challenge/
     env_file:
       - .env
     environment:
@@ -13,7 +13,7 @@ services:
       - stack
     links:
       - elasticsearch
-    depends_on:
+    depends_on: 
       - elasticsearch
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.7.2

@@ -15,14 +15,13 @@ namespace analyst_challenge
             var defaultIndex = configuration["ELASTICSEARCH_INDEX"];
 
             var settings = new ConnectionSettings(new Uri(url))
+                .DeadTimeout(TimeSpan.FromSeconds(10))
                 .DefaultIndex($"{defaultIndex}-{DateTime.Now:yyyyMMdd}")
                 .DefaultMappingFor<EventReceiver>(m => m
                     .PropertyName(p => p.Id, "id")
                 );
-
-            var client = new ElasticClient(settings);
-
-            services.AddSingleton<IElasticClient>(client);
+            
+            services.AddSingleton<IElasticClient>(new ElasticClient(settings));
         }
     }
 }
